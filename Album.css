@@ -40,6 +40,9 @@ position: relative;
 top: 0;
 left: 370px;
 margin: 10px;
+font-size: medium;
+color: rgb(92, 206, 206);
+font-weight: bold;
 }
 .album-img img {
 

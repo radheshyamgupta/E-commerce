@@ -42,11 +42,16 @@ nav ul li {
   font-size: larger;
   font-weight: 400;
 }
+nav ul li:hover,
+.active{
+color: rgb(223, 13, 13);
+} 
+
 
 .badge{
   position: relative;
   top: -12px;
-  left: 1300px;
+  left: 1305px;
   color:rgb(8, 184, 190);
 }
 .car_right_button {

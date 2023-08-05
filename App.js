@@ -3,92 +3,28 @@ import './App.css';
 import Album from './Component/Album';
 import Footer from './Component/Footer/Footer';
 import Header from './Header';
-
+import Home from './Component/Pages/Home';
+import { createBrowserRouter,RouterProvider} from "react-router-dom"
+ import About from './Component/Pages/About';
+ import RootLayout from './Component/Pages/RootLayout';
+// import { Children } from "react-router-dom";
+import Store from './Component/Pages/Store';
+import Error from './Component/Pages/Error';
 function App() {
-  const cartElements = [
-
-    {
-    id:"1",
-    title: 'Album 1',
-    
-    price: " ₹12.99",
-    
-    imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
-    
-    quantity: 3,
-    
+  const router = createBrowserRouter([
+     { path: "/", element:<RootLayout></RootLayout>,
+    errorElement :<Error></Error>,
+     children:[
+      { path: "/about", element:<About></About> },
+      { path: "/store", element:<Store></Store> },
+      { path: "/home", element:<Home></Home> }
+     ]
     },
-    
-    {
-      id:"2",
-    
-    title: 'Album 2',
-    
-    price: " ₹14.99",
-    
-    imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
-    
-    quantity: 1,
-    
-    }
-    ,
-    {
-      id:"3",
-      title: 'Album 3',
-      
-      price: " ₹9.99",
-      
-      imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-      
-      quantity: 1,
-      
-      }
-      ,
-      {
-        id:"4",
-        title: 'Album 4',
-        
-        price: " ₹19.99",
-        
-        imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%204.png",
-        
-        quantity: 1,
-        
-        }
-        ,
-        {
-          id:"5",
-          title: 'T-Shirt',
-          
-          price: " ₹19.99",
-          
-          imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Shirt.png",
-          
-          quantity: 1,
-          
-          }
-          ,
-          {
-            id:"6",
-    
-            title: 'Coffee Cup',
-            
-            price: "₹19.00",
-            
-            imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Cofee.png",
-            
-            quantity: 1,
-            
-            }
-    
-    ]
+  ]);
+
   return (
     <div >
-    <Header></Header>
-     <Text></Text>
-    
-    <Album item={cartElements}></Album>
-    <Footer></Footer>
+      <RouterProvider router={router}/>
     </div>
   );
 }

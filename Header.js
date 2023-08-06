@@ -31,6 +31,7 @@ export default function Header() {
           <li><NavLink to={"/home"} style={{color:"white" ,textDecoration:"none"}}>HOME</NavLink></li>
           <li><NavLink to={"/store"} style={{color:"white", textDecoration:"none"}}>STORE</NavLink></li>
           <li><NavLink to={"/about"} style={{color:"white" ,textDecoration:"none"}}>ABOUT</NavLink></li>
+          <li><NavLink to={"/contact"} style={{color:"white" ,textDecoration:"none"}}>CONTACT-US</NavLink></li>
 
         </ul>
         <div>

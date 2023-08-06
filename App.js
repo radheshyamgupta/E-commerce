@@ -9,6 +9,9 @@ import { createBrowserRouter,RouterProvider} from "react-router-dom"
  import RootLayout from './Component/Pages/RootLayout';
  import ContactUs from './Component/ContectUS/ContectUs';
 // import { Children } from "react-router-dom";
+
+import Profile from './Component/ContectUS/Authentication/Profile';
+import LogIn from './Component/ContectUS/Authentication/LogIn';
 import Store from './Component/Pages/Store';
 import Error from './Component/Pages/Error';
 function App() {
@@ -19,7 +22,9 @@ function App() {
       { path: "/about", element:<About></About> },
       { path: "/store", element:<Store></Store> },
       { path: "/home", element:<Home></Home> },
-      { path: "/contact", element:<ContactUs></ContactUs> }
+      { path: "/contact", element:<ContactUs></ContactUs> },
+      { path: "/profile", element:<Profile></Profile> },
+      { path: "/login", element:<LogIn></LogIn>}
      ]
     },
   ]);

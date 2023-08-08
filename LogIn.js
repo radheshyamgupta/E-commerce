@@ -1,19 +1,32 @@
-import React, { useState } from 'react';
+import React, { useRef,useContext ,useState} from 'react';
+
+import { redirect, useNavigate } from 'react-router-dom';
+
+
 import './LogIn.css';
 import Header from '../../../Header';
-
+import { myContex } from '../../ContexApi/Contex';
+ 
 export default function LogIn() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+   
+    const navigate = useNavigate(); // Use useNavigate hook
+const forgotHandler=()=>{
+    navigate("/profile")
+}
+    
+    const {loginHandler,token}=useContext(myContex)
+    const usernameinputvalue = useRef()
+    // const [password, setPassword] = useState('');
+    const  passwordinputrefvalue=useRef()
     const [login, setLogin] = useState(false);
 const [loding,setloding]=useState(false)
-    const handleUsernameChange = (event) => {
-        setUsername(event.target.value);
-    };
+    // const handleUsernameChange = (event) => {
+    //     setUsername(event.target.value);
+    // };
 
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    };
+    // const handlePasswordChange = (event) => {
+    //     setPassword(event.target.value);
+    // };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -29,9 +42,9 @@ const [loding,setloding]=useState(false)
         fetch(url, {
             method: "POST",
             body: JSON.stringify({
-                email: username,
-                password: password,
-                returnSecureToken: true
+                email: usernameinputvalue.current.value,
+                password: passwordinputrefvalue.current.value,
+                returnSecureToken: true,
             }),
             headers: {
                 "Content-Type": "application/json"
@@ -47,25 +60,36 @@ const [loding,setloding]=useState(false)
             }
         })
         .then((data) => {
+
           
             if (login) {
+
                 alert("Logged in successfully");
                 console.log(data)
+                localStorage.setItem("token",token)
+                navigate("/store")
             } else {
                 alert("Signed up successfully");
+              
                 console.log(data)
             }
-            setloding(false);
-            setUsername("");
-            setPassword("");
+            loginHandler(data.idToken)
+
+            setloding(false)
+            // passwordinputrefvalue="",
+            // usernameinputvalue=""
+        
+           
         })
         .catch((error) => {
             alert(error.message);
             setloding(false);
         });
     };
-console.log('Username:', username);
-console.log('Password:', password);
+    
+
+const token1=localStorage.getItem("token")
+console.log(token1,"token is recied")
 
     return (
         <div className="logindiv">
@@ -76,8 +100,7 @@ console.log('Password:', password);
                         type="text"
                         id="username"
                         placeholder="Email..."
-                        value={username}
-                        onChange={handleUsernameChange}
+                       ref={usernameinputvalue}
                         required
                     />
                 </div>
@@ -86,8 +109,8 @@ console.log('Password:', password);
                         type="password"
                         id="password"
                         placeholder="Password..."
-                        value={password}
-                        onChange={handlePasswordChange}
+                        ref={passwordinputrefvalue}
+                       
                         required
                     />
                 </div>
@@ -97,6 +120,8 @@ console.log('Password:', password);
             <p onClick={() => setLogin(!login)}>
                 {login ? "Don't have an account? Sign up" : "Already have an account? Log in"}
             </p>
+           { login &&<p onClick={forgotHandler}  className="forgot">Forgot Password</p>}
+  
         </div>
     );
 }

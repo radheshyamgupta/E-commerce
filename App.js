@@ -16,15 +16,19 @@ import Store from './Component/Pages/Store';
 import Error from './Component/Pages/Error';
 function App() {
   const router = createBrowserRouter([
-     { path: "/", element:<RootLayout></RootLayout>,
+     { path: "/", element:<RootLayout> 
+      <LogIn></LogIn>
+     </RootLayout> ,
     errorElement :<Error></Error>,
+   
      children:[
       { path: "/about", element:<About></About> },
       { path: "/store", element:<Store></Store> },
       { path: "/home", element:<Home></Home> },
       { path: "/contact", element:<ContactUs></ContactUs> },
       { path: "/profile", element:<Profile></Profile> },
-      { path: "/login", element:<LogIn></LogIn>}
+      { path: "/login", element:<LogIn></LogIn>},
+      { path: "/logout", element:<LogIn></LogIn>}
      ]
     },
   ]);

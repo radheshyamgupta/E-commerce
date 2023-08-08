@@ -4,6 +4,21 @@ const myContex = createContext()
 
 
 export default function Contex({ children }) {
+   const [token,settoken]=useState(null)
+   const userLoggedIn=!!token;
+   const loginHandler=(token)=>{
+settoken(token)
+   }
+   const logoutHandler=()=>{
+      settoken(null)
+   }
+   // const contexValue={
+   //    token:token,
+   //    isLoggedin:userLoggedIn,
+   //    login:loginHandler,
+   //    logout:logoutHandler
+
+   // }
    const [display, setDisplay] = useState(false)
 
    const [datas, setData] = useState([])
@@ -18,7 +33,7 @@ export default function Contex({ children }) {
 
    return (
 
-      <myContex.Provider value={{ datas, dataHandler, setCartItemData,cartDataItem, cartDataItemHandler, setData ,setDisplay,display}} >
+      <myContex.Provider value={{ datas, dataHandler, setCartItemData,cartDataItem, cartDataItemHandler, setData ,setDisplay,display,token,loginHandler,logoutHandler }} >
          {children}
 
       </myContex.Provider>

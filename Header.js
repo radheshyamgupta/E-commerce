@@ -1,10 +1,38 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect ,useState} from 'react'
 import { myContex } from "./Component/ContexApi/Contex"
+import{useNavigate} from "react-router-dom"
 import "./Header.css"
 import { NavLink } from 'react-router-dom'
 import Modal from './Component/Modal/Modal'
+import LogIn from './Component/ContectUS/Authentication/LogIn'
 
 export default function Header() {
+  const [autoLogout, setAutoLogout] = useState(false)
+  const localStorageitem=localStorage.getItem("token")
+  const navigate=useNavigate()
+ const {token,logoutHandler}=useContext(myContex)
+ const logout=()=>{
+  logoutHandler()
+  localStorage.removeItem("token")
+  navigate("/login")
+ 
+ 
+ }
+
+ useEffect(() => {
+  if (localStorageitem) {
+    setAutoLogout(true); 
+    const time = setTimeout(() => {
+      setAutoLogout(false); 
+      localStorage.removeItem("token");
+      navigate("/login");
+    }, 2000);
+    return () => {
+      clearTimeout(time); 
+    };
+  }
+}, []);
+
 
 
   const { display, setDisplay, cartDataItem, setCartItemData, datas } = useContext(myContex)
@@ -33,8 +61,9 @@ export default function Header() {
           <li><NavLink to={"/store"} style={{color:"white", textDecoration:"none"}}>STORE</NavLink></li>
           <li><NavLink to={"/about"} style={{color:"white" ,textDecoration:"none"}}>ABOUT</NavLink></li>
           <li><NavLink to={"/contact"} style={{color:"white" ,textDecoration:"none"}}>CONTACT-US</NavLink></li>
-          <li><NavLink to={"/login"} style={{color:"white" ,textDecoration:"none"}}>LOG IN</NavLink></li>
-          <li><NavLink to={"/profile"} style={{color:"white" ,textDecoration:"none"}}>PROFILE</NavLink></li>
+          { !localStorageitem &&<li><NavLink to={"/login"} style={{color:"white" ,textDecoration:"none"}}>LOG IN</NavLink></li>}
+         {localStorageitem && <li><NavLink to={"/profile"} style={{color:"white" ,textDecoration:"none"}}>PROFILE</NavLink></li>}
+          { localStorageitem &&<li><NavLink to={"/logout"} style={{color:"white" ,textDecoration:"none"}} onClick={logout} >LOGOUT</NavLink></li>}
 
         </ul>
         <div>
@@ -47,6 +76,7 @@ export default function Header() {
 
       </nav>
       {display ? <Modal closehandlerbutton={closeHandler} /> : ""}
+      
     </>
 
   )
